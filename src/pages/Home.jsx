@@ -1,26 +1,23 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
 function Home() {
+  const userInputRef = useRef(null);
   const [messages, setMessages] = useState([
     {
       message: "Hallo selamat datang di MajaAI",
       role: "ai",
     },
   ]);
-  const [userTyping, setUserTyping] = useState("");
-  const [userInput, setUserInput] = useState("");
-
-  const typing = (e) => {
-    setUserTyping(e.target.value);
-  };
 
   const send = () => {
-    setUserInput(userTyping);
-    setMessages([...messages, { message: userInput, role: "user" }]);
+    setMessages([
+      ...messages,
+      { message: userInputRef.current.value, role: "user" },
+    ]);
   };
 
   return (
@@ -32,16 +29,20 @@ function Home() {
             if (message.role == "user") {
               return (
                 <>
-                  <div className="translate-x-44 bg-gray-600 max-w-[50%] p-3 rounded-xl">
-                    <p className="text-sm text-white">{message.message}</p>
+                  <div className="flex justify-end w-full">
+                    <div className="bg-gray-600 max-w-[50%] p-3 rounded-xl">
+                      <p className="text-sm text-white">{message.message}</p>
+                    </div>
                   </div>
                 </>
               );
             } else {
               return (
                 <>
-                  <div className="bg-gray-600 max-w-[50%] p-3 rounded-xl">
-                    <p className="text-sm text-white">{message.message}</p>
+                  <div>
+                    <div className="bg-gray-600 max-w-[50%] p-3 rounded-xl">
+                      <p className="text-sm text-white">{message.message}</p>
+                    </div>
                   </div>
                 </>
               );
@@ -52,8 +53,7 @@ function Home() {
           <Input
             type="text"
             name="userInput"
-            onChange={typing}
-            value={userTyping}
+            ref={userInputRef}
             placeholder="Ketik sesuatu..."
             className="w-[85%]"
           />
