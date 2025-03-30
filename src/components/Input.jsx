@@ -9,7 +9,7 @@ function Input(props) {
         value={value}
         ref={ref}
         placeholder={placeholder}
-        className={`h-11 rounded-xl outline outline-gray-500 text-white px-3 ${className}`}
+        className={`bg-gray-50 h-11 rounded-xl outline outline-gray-400 text-slate-950 px-3 focus:outline-4 ${className}`}
       />
     </>
   );
